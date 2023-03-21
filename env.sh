@@ -1,5 +1,5 @@
 #!/bin/bash
 
-export DIR=/home/$USER && \
-export NODES_FILE=$DIR/kube_cluster_prep/nodesfile && \
-export PROM_NODE=$(tail -1 $NODES_FILE |  cut -d "." -f 1)
+export DIR=/home/$USERNAME && export NODES_FILE=$DIR/kube_cluster_prep/nodesfile && export N_HOSTS=3 && \
+export PERIOD=8 && export CLUSTER_NAME=sagittaire && export MASTER_NODE=$(head -n 1 $NODES_FILE) && \
+export PROM_NODE=$(tail -1 $NODES_FILE)
