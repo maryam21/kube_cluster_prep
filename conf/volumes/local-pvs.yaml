@@ -28,7 +28,7 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-              - ${PROM_NODE}.lyon.grid5000.fr 
+              - ${PROM_NODE}
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -51,5 +51,5 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-              - ${PROM_NODE}.lyon.grid5000.fr 
+              - ${PROM_NODE}
 ---

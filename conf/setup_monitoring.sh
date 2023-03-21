@@ -4,9 +4,8 @@
 #sed_str=$(echo s/"$old_prom_node"/"$prom_node"/g)
 
 source $DIR/env.sh
-# export KUBECONFIG=/etc/kubernetes/admin.conf
+export KUBECONFIG=/etc/kubernetes/admin.conf
 root_dir="$DIR/kube_cluster_prep"
-prom_node=$PROM_NODE.lyon.grid5000.fr
 
 ##### Setup local storage #####
 # prom_node="$(tail -1 $root_dir/nodesfile).lyon.grid5000.fr"
@@ -18,7 +17,7 @@ echo "Monitoring will be setup on $PROM_NODE"
 
 
 ##### Pre setup #####
-kubectl label nodes $prom_node kubernetes.io/e2e-az-name=e2e-az1
+kubectl label nodes $PROM_NODE kubernetes.io/e2e-az-name=e2e-az1
 kubectl create namespace monitoring
 
 
