@@ -3,8 +3,7 @@
 #old_prom_node=$(grep '.grid5000.fr' $root_dir/conf/prometheus/local-storage.yaml | sed 's/[\t ]//g;s/-//')
 #sed_str=$(echo s/"$old_prom_node"/"$prom_node"/g)
 
-source $DIR/env.sh
-export KUBECONFIG=/etc/kubernetes/admin.conf
+source ./env.sh && export KUBECONFIG=/etc/kubernetes/admin.conf
 root_dir="$DIR/kube_cluster_prep"
 
 ##### Setup local storage #####
