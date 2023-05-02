@@ -3,8 +3,7 @@
 #old_prom_node=$(grep '.grid5000.fr' $root_dir/conf/prometheus/local-storage.yaml | sed 's/[\t ]//g;s/-//')
 #sed_str=$(echo s/"$old_prom_node"/"$prom_node"/g)
 
-source $DIR/env.sh && export KUBECONFIG=/etc/kubernetes/admin.conf && \
-source $DIR/kube_cluster_prep/env.sh
+source ../env.sh && export KUBECONFIG=/etc/kubernetes/admin.conf && \
 root_dir="$DIR/kube_cluster_prep"
 
 ##### Setup local storage #####
@@ -19,6 +18,7 @@ echo "Monitoring will be setup on $PROM_NODE"
 ##### Pre setup #####
 kubectl label nodes $PROM_NODE kubernetes.io/e2e-az-name=e2e-az1
 kubectl create namespace monitoring
+kubectl taint nodes $PROM_NODE monitoring=prom:NoSchedule
 
 
 ##### Setup the Prometheus helm chart #####
