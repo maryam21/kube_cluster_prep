@@ -2,6 +2,7 @@
 
 #Load conf files
 source ./utils.sh
+source ./env.sh
 
 dir=$(pwd)
 filename="nodesfile" 
