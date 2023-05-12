@@ -1,5 +1,7 @@
+.gitignore
 nodesfile
 nodesfile1
 monitoring
 datasets/data
 */__pycache__
+*.txt
