@@ -100,3 +100,10 @@
 	```
 	echo "http://$GATEWAY_URL/"
 	```
+
+# HPA
+
+	```
+		kubectl apply -f components.yaml
+		kubectl create -f hpa.yaml
+	```
