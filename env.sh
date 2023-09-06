@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export USERNAME=mahhttouche
-export DIR=/home/$USERNAME && export NODES_FILE=$DIR/kube_cluster_prep/nodesfile && export N_HOSTS=2 && \
+export DIR=/home/$USERNAME && export NODES_FILE=$DIR/kube_cluster_prep/nodesfile && export N_HOSTS=4 && \
 export PERIOD=2 && export CLUSTER_NAME=nova && export MASTER_NODE=$(head -n 1 $NODES_FILE)  && export TEA_NODE=$(head -n 2 $NODES_FILE | sed '2p;d') && \
 export PROM_NODE=$(head -3 $NODES_FILE | sed '3p;d') && \
 export GENS_FILE=$DIR/metric-dataset-generator/gensfile.txt
