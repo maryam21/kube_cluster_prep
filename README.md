@@ -112,3 +112,13 @@ if you have pending status in External IP field then export the following variab
 
 	kubectl apply -f components.yaml
 	kubectl create -f hpa.yaml
+
+# Custom scaler
+
+	kubectl apply -f components.yaml
+	pip install kubernetes
+
+ Launch scaler:
+ 	python3 p_scaler.py
+  	
+  
