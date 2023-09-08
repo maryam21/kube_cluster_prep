@@ -49,6 +49,7 @@ Then export the enviroment variables:
 	kubectl create -f teastore-clusterip.yaml
  
  To verify that all pods are running:
+ 
 	kubectl get pod
 
 # Istio mesh setup
