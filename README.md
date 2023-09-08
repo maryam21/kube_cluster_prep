@@ -1,5 +1,7 @@
 # Reserving the machines
-	
+	./reserve.sh
+ 	./deploy.sh
+  	./post_install.sh
 
 # Launching the cluster
 	
@@ -20,10 +22,12 @@ On the master node export:
 	 
 	 <!-- kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml -->
 	 kubectl apply -f weave-daemonset-k8s.yaml
+  
   Verify that all nodes are ready with:
   	kubectl get nodes
    	source env.sh
-  Make sure share folder exist in local directory and local-pvs has the right prometheus node name:
+    
+  Make sure "share" folder exists in home directory and local-pvs has the right prometheus node name:
 	kubectl taint nodes $GEN_1 gens=yes:NoSchedule
 
 # Launch monitoring setup
@@ -31,17 +35,19 @@ On the master node export:
 	 ssh root@[MASTER_NODE]
 	 source PATH/TO/kube_cluster_prep/setups/setup_env_vars.sh
 	 PATH/TO/kube_cluster_prep/setups/setup_monitoring.sh
-  Verify that all 
+  
+  Verify that all monitoring components are ready:
  	 kubectl get all -n monitoring
 
 # TeaStore setup:
 	kubectl create -f teastore-clusterip.yaml
+ 
  To verify that all pods are running:
 	kubectl get pod
 
 # Istio mesh setup
 
-	On master node download istio:
+	On master node download istio if "istio-1.18.0" folder does not exist:
 
 	```
 		curl -L https://istio.io/downloadIstio | sh -
