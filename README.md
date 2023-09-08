@@ -27,6 +27,9 @@ On the master node export:
   Verify that all nodes are ready with:
   
   	kubectl get nodes
+   
+Then export the enviroment variables:
+
    	source env.sh
     
   Make sure "share" folder exists in home directory and local-pvs has the right prometheus node name:
