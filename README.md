@@ -24,8 +24,8 @@
 	Here we'll use Weave, but another one can be used.
 	 
 	 <!-- kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml -->
-	 kubectl apply -f weave-daemonset-k8s.yaml
 	 export KUBECONFIG=/etc/kubernetes/admin.conf
+	 kubectl apply -f weave-daemonset-k8s.yaml
 	 kubectl taint nodes $GEN_1 gens=yes:NoSchedule
 
 # Launch monitoring setup
@@ -106,4 +106,5 @@
 	```
 		kubectl apply -f components.yaml
 		kubectl create -f hpa.yaml
+		kubectl get hpa
 	```

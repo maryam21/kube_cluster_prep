@@ -1,0 +1,345 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-db
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-db
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-db
+    spec:
+      containers:
+        - name: teastore-db
+          image: descartesresearch/teastore-db
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3306
+          # args:
+          #   - --cpu-period="100000"
+          #   - --cpu-quota="3200000"
+          resources:
+            limits:
+              cpu: "1000m"
+              # memory: "5G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teastore-db
+  labels:
+    app: teastore
+    run: teastore-db
+spec:
+  ports:
+    - port: 3306
+      protocol: TCP
+  selector:
+    run: teastore-db
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-registry
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-registry
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-registry
+    spec:
+      containers:
+        - name: teastore-registry
+          image: descartesresearch/teastore-registry
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          # args:
+          #   - --cpu-period="100000"
+          #   - --cpu-quota="3200000"
+          resources:
+            limits:
+              cpu: "1000m"
+              # memory: "5G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teastore-registry
+  labels:
+    app: teastore
+    run: teastore-registry
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    run: teastore-registry
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-persistence
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-persistence
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-persistence
+    spec:
+      containers:
+        - name: teastore-persistence
+          image: descartesresearch/teastore-persistence
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-persistence"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+            - name: DB_HOST
+              value: "teastore-db"
+            - name: DB_PORT
+              value: "3306"
+          # args:
+          #   - --cpu-period="100000"
+          #   - --cpu-quota="3200000"
+          resources:
+            limits:
+              cpu: "1000m"
+              # memory: "5G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teastore-persistence
+  labels:
+    app: teastore
+    run: teastore-persistence
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    run: teastore-persistence
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-auth
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-auth
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-auth
+    spec:
+      containers:
+        - name: teastore-auth
+          image: descartesresearch/teastore-auth
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-auth"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+          # args:
+          #   - --cpu-period="100000"
+          #   - --cpu-quota="3200000"
+          resources:
+            limits:
+              cpu: "1000m"
+              # memory: "5G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teastore-auth
+  labels:
+    app: teastore
+    run: teastore-auth
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    run: teastore-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-image
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-image
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-image
+    spec:
+      containers:
+        - name: teastore-image
+          image: descartesresearch/teastore-image
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-image"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+          # args:
+          #   - --cpu-period="100000"
+          #   - --cpu-quota="3200000"
+          resources:
+            limits:
+              cpu: "1000m"
+              # memory: "5G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teastore-image
+  labels:
+    app: teastore
+    run: teastore-image
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    run: teastore-image
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-recommender
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-recommender
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-recommender
+    spec:
+      containers:
+        - name: teastore-recommender
+          image: descartesresearch/teastore-recommender
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-recommender"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+          # args:
+          #   - --cpu-period="100000"
+          #   - --cpu-quota="3200000"
+          resources:
+            limits:
+              cpu: "1000m"
+              # memory: "5G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teastore-recommender
+  labels:
+    app: teastore
+    run: teastore-recommender
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    run: teastore-recommender
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-webui
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-webui
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-webui
+        # io.cadvisor.metric.teastore-webui: "app_config.json"
+    spec:
+      # volumes:
+      #   - name: cvol
+      #     hostPath:
+      #       path: /home/mahhttouche
+      containers:
+        - name: teastore-webui
+          image: descartesresearch/teastore-webui
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-webui"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+          # args:
+          #   - --cpu-period="100000"
+          #   - --cpu-quota="3200000"
+          # volumeMounts:
+          # - name: cvol
+          #   mountPath: /home/
+          # args:
+          # - --config.file=/home/app_config.json
+          resources:
+            limits:
+              cpu: "1000m"
+              # memory: "5G"
+            # requests:
+            #   cpu: 31000m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teastore-webui
+  labels:
+    app: teastore
+    run: teastore-webui
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30080
+      protocol: TCP
+  # nodePortAddresses: fe80::e42:a103:a0:fb5c/64
+  selector:
+    run: teastore-webui

@@ -9,7 +9,7 @@ volumeBindingMode: WaitForFirstConsumer
 ---
 apiVersion: v1
 kind: PersistentVolume
-metadata: 
+metadata:
   name: local-pv-0
 spec:
   capacity:
@@ -20,19 +20,19 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: LOCAL_DIR_PATH
+    path: /home/mahhttouche/share
   nodeAffinity:
     required:
       nodeSelectorTerms:
         - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-              - PROM_NODE_NAME 
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - nova-17.lyon.grid5000.fr
 ---
 apiVersion: v1
 kind: PersistentVolume
-metadata: 
+metadata:
   name: local-pv-1
 spec:
   capacity:
@@ -43,13 +43,13 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: LOCAL_DIR_PATH
+    path: /home/mahhttouche/share
   nodeAffinity:
     required:
       nodeSelectorTerms:
         - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-              - PROM_NODE_NAME 
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - nova-17.lyon.grid5000.fr
 ---

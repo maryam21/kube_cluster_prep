@@ -72,13 +72,13 @@ def main():
     v1 = client.CoreV1Api()
     apps_v1 = client.AppsV1Api()
     custom_api = client.CustomObjectsApi()
-    prometheus_url = "http://172.16.48.9:30090"
+    prometheus_url = "http://172.16.52.8:30090"
     #url = prometheus_url + '/api/v1/query?'
     url = prometheus_url + '/api/v1/query_range?'
 
     while True:
-        payload = {'query': "rate(node_pressure_cpu_waiting_seconds_total{instance='172.16.48.8:9100'}[60s])", 'start': (datetime.now()-timedelta(seconds=10)).timestamp(), 'end': datetime.now().timestamp(), 'step': '1s'}
-        payload_mem = {'query': "rate(node_pressure_memory_waiting_seconds_total{instance='172.16.48.8:9100'}[60s])", 'start': (datetime.now()-timedelta(seconds=10)).timestamp(), 'end': datetime.now().timestamp(), 'step': '1s'}
+        payload = {'query': "rate(node_pressure_cpu_waiting_seconds_total{instance='172.16.52.7:9100'}[60s])", 'start': (datetime.now()-timedelta(seconds=10)).timestamp(), 'end': datetime.now().timestamp(), 'step': '1s'}
+        payload_mem = {'query': "rate(node_pressure_memory_waiting_seconds_total{instance='172.16.52.7:9100'}[60s])", 'start': (datetime.now()-timedelta(seconds=10)).timestamp(), 'end': datetime.now().timestamp(), 'step': '1s'}
 
         cpu_pressure = 0
         mem_pressure = 0
@@ -110,7 +110,7 @@ def main():
         print("memory pressure ", mem_pressure)
         
         if cpu_pressure > MAX_PRESSURE or mem_pressure > 0:
-            MAX_CPU = 1
+            MAX_CPU = 0.9
             
         for dep_name in DEPLOYMENTS:
             pods = v1.list_namespaced_pod("default", label_selector="run=" + dep_name)

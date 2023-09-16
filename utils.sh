@@ -40,9 +40,9 @@ discovery-cluster(){
 	nodefile=$1
 	dir=$2
 	echo "Trying to create the file: " $nodefile 
-	for i in `uniq $OAR_NODE_FILE | cut -d "."  -f1 `;
+	for i in `uniq $NODES_FILE | cut -d "."  -f1 `;
 	do
-		echo $i >> $dir/$nodefile
+		# echo $i >> $dir/$nodefile
 		echo $i"-ib0" >> $dir/$nodefile"1"
 	done
 

@@ -6,3 +6,5 @@ systemctl restart containerd
 
 sudo service docker start
 
+# apt install lsof
+# apt install vnstat
